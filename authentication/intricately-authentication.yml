@@ -1,0 +1,27 @@
+generated: '2026-07-19'
+method: searched
+source: https://help.intricately.com/hc/en-us/articles/3278449675-authentication
+docs: https://help.intricately.com/hc/en-us/articles/3278449675-authentication
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+  oauth2_flows: []
+schemes:
+- name: X-API-KEY
+  type: apiKey
+  in: header
+  parameter_name: X-API-KEY
+  description: >-
+    Every API request must be authenticated using the X-API-KEY HTTP header. A missing
+    or invalid key returns response code 4000. API keys are issued to Enterprise-plan
+    customers on request; there is no self-serve OAuth or token flow.
+  sources:
+  - https://help.intricately.com/hc/en-us/articles/3278449675-authentication
+access:
+  availability: enterprise-only
+  request_key: https://help.intricately.com/hc/en-us/articles/4416133622285-Request-an-API-Key
+notes: >-
+  Product rebranded to the Cloud Dynamics API after HG Insights acquired Intricately
+  in 2022; the api.intricately.com host and X-API-KEY scheme remain in use.
