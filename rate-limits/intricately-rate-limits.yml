@@ -1,0 +1,28 @@
+generated: '2026-07-19'
+method: searched
+source: https://kb.intricately.com/docs/api-response-codes
+docs: https://help.intricately.com/hc/en-us/articles/7666116300-api-response-codes
+rate_limits:
+- scope: global
+  limit_count: 1
+  interval: second
+  description: >-
+    The API permits one request per second. Exceeding it returns application error
+    code 3000 ("You have exceeded the request limit of 1 req/sec.").
+  breach_code: 3000
+quotas:
+- type: api-credits
+  description: >-
+    Usage is metered in API credits. Code 5001 signals insufficient credits for the
+    requested job size; code 5006 signals no remaining credits. Credit allotment is
+    set by the Enterprise plan.
+  breach_codes:
+  - 5001
+  - 5006
+bulk_job_limits:
+- limit: 10
+  unit: domains-per-job
+  applies_to: evaluation-period
+- limit: 10000
+  unit: domains-per-job
+  applies_to: enterprise-license

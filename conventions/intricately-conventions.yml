@@ -1,0 +1,64 @@
+generated: '2026-07-19'
+method: searched
+source: https://kb.intricately.com/
+docs: https://kb.intricately.com/docs/using-the-intricately-api
+api: Cloud Dynamics API (Intricately)
+base_url: https://api.intricately.com/api/v2
+authentication:
+  style: api-key-header
+  header: X-API-KEY
+  docs: https://help.intricately.com/hc/en-us/articles/3278449675-authentication
+async_jobs:
+  style: bulk-job
+  description: >-
+    Data is requested in bulk via asynchronous Bulk Jobs. POST an array of domains to
+    /api/v2/bulk_jobs to receive a job_id and status "submitted", poll GET
+    /api/v2/bulk_jobs/{job_id} until status is complete, then fetch results. Large jobs
+    can take up to 3 hours when many domains are new to the platform.
+  submit: POST /api/v2/bulk_jobs
+  poll: GET /api/v2/bulk_jobs/{job_id}
+  list: GET /api/v2/bulk_jobs
+  job_states:
+  - submitted
+  - processing
+  - in-progress
+  - ready
+  - completed
+  docs: https://kb.intricately.com/docs/create-a-bulk-job
+idempotency:
+  supported: false
+  notes: No idempotency-key header or documented idempotency contract was found in the docs.
+pagination:
+  style: page
+  response_fields:
+  - total
+  - page
+  - result_count
+  notes: >-
+    Bulk-job list responses include total, page, and result_count fields; derived from
+    documented response shape, not an OpenAPI spec.
+rate_limiting:
+  limit: 1 request per second
+  breach_code: 3000
+  ref: rate-limits/intricately-rate-limits.yml
+quota:
+  metering: api-credits
+  breach_codes:
+  - 5001
+  - 5006
+error_envelope:
+  fields:
+  - code
+  - message
+  ref: errors/intricately-error-codes.yml
+versioning:
+  scheme: uri-path
+  current: v2
+  ref: lifecycle/intricately-lifecycle.yml
+request_validation:
+  payload: JSON array of domain strings
+  breach_codes:
+  - 4001
+  - 4002
+  - 4003
+  - 4005

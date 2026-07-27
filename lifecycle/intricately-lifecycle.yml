@@ -1,0 +1,35 @@
+generated: '2026-07-19'
+method: searched
+source: https://status.intricately.com/
+api: Cloud Dynamics API (Intricately)
+versioning:
+  scheme: uri-path
+  current: v2
+  example: https://api.intricately.com/api/v2/bulk_jobs
+  docs: https://kb.intricately.com/docs/using-the-intricately-api
+status_page: https://status.intricately.com/
+status_provider: Atlassian Statuspage
+status_components:
+- intricately.com
+- Intricately API
+- Company API
+- Enrichment API
+- Data Snapshots API
+- Events API
+- List Enrichment
+- Smart Lists
+- Login and Signup
+- Salesforce Connector
+- Chrome Extension
+deprecation:
+  policy_url: null
+  sunset_header: null
+  notes: No published deprecation or Sunset-header policy was found.
+ownership:
+  acquired_by: HG Insights
+  acquired_date: '2022-03-29'
+  product_rebrand: Cloud Dynamics API
+  notes: >-
+    Intricately was acquired by HG Insights in March 2022. The data product is now
+    marketed as Cloud Dynamics, though the api.intricately.com host and Intricately
+    documentation domains remain in service.

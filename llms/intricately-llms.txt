@@ -1,0 +1,31 @@
+# Cloud Dynamics Documentation
+
+> Cloud Dynamics gives cloud sales and marketing teams an unfair advantage in finding and acquiring new customers, getting proactive notification of sales cycles, spotting churn before it happens, and more.
+
+## Guides
+- [Getting Started](https://kb.intricately.com/docs/using-the-intricately-api.md): The Cloud Dynamics API is simple and designed to help you build apps to power sales & marketing workflows.
+- [API Response Codes](https://kb.intricately.com/docs/api-response-codes.md)
+- [Accessing Data](https://kb.intricately.com/docs/accessing-data.md): Accessing data is easy!
+- [Domains new to Cloud Dynamics](https://kb.intricately.com/docs/new-domains.md): Domains we haven't seen before don't phase us.
+- [Company Document Schema](https://kb.intricately.com/docs/the-company-document.md)
+- [Create a Bulk Job](https://kb.intricately.com/docs/create-a-bulk-job.md)
+- [Introduction to Cloud Dynamics Data](https://kb.intricately.com/docs/introduction-for-data-scientists.md): The leading cloud companies use Cloud Dynamics for lead scoring, propensity modeling, account potential modeling, TAM sizing and more. In this section we’ll introduce you to Cloud Dynamics data, where it comes from, and the kinds of insights it provides.
+- [Where does Cloud Dynamics Data come from?](https://kb.intricately.com/docs/where-does-intricately-data-come-from.md)
+- [Where do Cloud Dynamics companies come from?](https://kb.intricately.com/docs/where-do-intricately-companies-come-from.md)
+- [Application Traffic](https://kb.intricately.com/docs/application-traffic.md)
+- [Company Records](https://kb.intricately.com/docs/company-records.md): Focus on Company records to get an edge
+- [Product Signatures](https://kb.intricately.com/docs/product-signature-locations.md): How we identify products deployed by companies
+- [Domain Mapping 🗺](https://kb.intricately.com/docs/domain-mapping-confidence.md)
+- [Revenue Data 💰](https://kb.intricately.com/docs/revenue-data.md): Yes we have company revenue data and yes it's accurate.
+- [Record Completeness](https://kb.intricately.com/docs/record-completeness.md): Record Completeness represents how much information Cloud Dynamics has from which to build a company report.
+- [The Cloud Dynamics Data Snapshot ⭐️](https://kb.intricately.com/docs/the-intricately-data-snapshot.md): The Cloud Dynamics Data Snapshot is a purpose-built dataset for Data Science and Machine Learning
+- [Cloud Dynamics 💖’s Snowflake ❄️](https://kb.intricately.com/docs/intricately-on-snowflake.md): Access your Cloud Dynamics Data Snapshot in a Snowflake data warehouse.
+- [Snowflake Views](https://kb.intricately.com/docs/snowflake-views.md): Snowflake views are the equivalent of database tables. For more detail on views, please see [Snowflake’s Overview of Views](https://docs.snowflake.com/en/user-guide/views-introduction.html).
+- [Domains](https://kb.intricately.com/docs/domains-1.md): Domains, such as nike.com, exist in your CRM and other data sources used by your business operations team.
+- [Companies](https://kb.intricately.com/docs/companies.md): Companies are business entities that represent three types of objects in Cloud Dynamics' data model:  1. Companies   2. Products  3. Providers
+- [Providers](https://kb.intricately.com/docs/providers.md): Providers are a special type of company and one of the three business entities represented in the COMPANIES view.
+- [Products we track](https://kb.intricately.com/docs/products-we-track.md): Cloud Dynamics tracks over 15,000 distinct products and counting!
+- [Use Cases](https://kb.intricately.com/docs/use-cases.md): Use Cases are powerful rollups of data that provide tangible insights into which areas a company is investing.
+- [Historical Data](https://kb.intricately.com/docs/historical-data.md)
+- [Digital Relationships](https://kb.intricately.com/docs/digital-relationship.md): Digital Relationship data contains the domains a company operates along with the company's parent-child relationships.
+- [Operating System (OS) Adoption](https://kb.intricately.com/docs/operating-system-os-adoption.md)

@@ -1,0 +1,47 @@
+generated: '2026-07-19'
+method: searched
+source: https://kb.intricately.com/docs/api-response-codes
+docs: https://help.intricately.com/hc/en-us/articles/7666116300-api-response-codes
+format: application-specific
+envelope:
+  fields:
+  - code
+  - message
+  description: >-
+    Errors are returned as a JSON object carrying an application-specific numeric
+    "code" plus a human-readable "message". These codes are distinct from HTTP status
+    codes and are documented verbatim below.
+error_codes:
+- code: 2001
+  message: This job is in progress. Please try again later.
+  area: bulk-jobs
+- code: 3000
+  message: You have exceeded the request limit of 1 req/sec.
+  area: rate-limit
+- code: 4000
+  message: Your API key is missing or invalid. Please specify your API key in a X-API-KEY request header.
+  area: authentication
+- code: 4001
+  message: A JSON text must at least contain two octets! The Bulk Job payload you submitted is not valid JSON.
+  area: request-validation
+- code: 4002
+  message: Request body must be an array of domains.
+  area: request-validation
+- code: 4003
+  message: You have exceeded the item limit for a Bulk Job. Please reduce the number of items.
+  area: bulk-jobs
+- code: 4004
+  message: Job not found.
+  area: bulk-jobs
+- code: 4005
+  message: Invalid date format. Please provide an epoch timestamp.
+  area: request-validation
+- code: 4006
+  message: You don't have the proper permissions to access this resource.
+  area: authorization
+- code: 5001
+  message: Insufficient API credits remaining; reduce the job size or contact support.
+  area: quota
+- code: 5006
+  message: You have no remaining API credits.
+  area: quota
