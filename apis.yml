@@ -35,7 +35,7 @@ x-tier: profile
 x-tier-reason: enriched-pipeline
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-19'
+modified: '2026-08-14'
 tags:
 - Company
 - API
@@ -79,6 +79,8 @@ apis:
     url: llms/intricately-llms.txt
   - type: MCPServer
     url: mcp/intricately-mcp.yml
+  - type: DataModel
+    url: data-model/intricately-data-model.yml
 common:
 - type: DeveloperPortal
   url: https://developers.intricately.com/
@@ -89,20 +91,41 @@ common:
 - type: StatusPage
   url: https://status.intricately.com/
 - type: Pricing
-  url: https://help.intricately.com/hc/en-us/articles/4416133622285-Request-an-API-Key
+  url: https://help.intricately.com/articles/5366497774-request-an-api-key
 - type: SignUp
   url: https://content.intricately.com/demo
+- type: Login
+  url: https://my.intricately.com/
+- type: TermsOfService
+  url: https://hginsights.com/terms-of-service/
+- type: PrivacyPolicy
+  url: https://hginsights.com/privacy-policy/
 - type: LLMsTxt
   url: https://kb.intricately.com/llms.txt
 - type: DomainSecurity
   url: security/intricately-domain-security.yml
+- type: Plans
+  url: plans/intricately-plans-pricing.yml
+- type: Packages
+  url: packages/intricately-packages.yml
+- type: Conformance
+  url: conformance/intricately-conformance.yml
+- type: TrustCenter
+  url: security/intricately-trust-center.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 x-enrichment:
-  date: '2026-07-19'
-  status: backfilled
+  date: '2026-08-14'
+  status: enriched
+  artifacts_added: 6
   pass: local-v1
-  note: backfilled from .gitignore signal + verified work evidence
+  note: >-
+    Round 2. Contract discovery ran against api.intricately.com, kb.intricately.com,
+    help.intricately.com and the apex: no OpenAPI, GraphQL, MCP or agent card
+    exists, but all six documented REST routes were confirmed live by probe. No
+    OpenAPI is published anywhere (verified across four hosts); the absence and its
+    evidence are recorded in conformance/intricately-conformance.yml rather than as
+    x-coverage, since the pass itself completed and produced real searched artifacts.
