@@ -1,0 +1,80 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  registry.npmjs.org search, pypi.org, rubygems.org, crates.io, packagist.org,
+  NuGet search, api.github.com (github.com/intricately, github.com/HGInsights),
+  plus the Cloud Dynamics documentation at kb.intricately.com
+note: >-
+  No first-party client library exists for the Cloud Dynamics (Intricately) API on
+  any public registry. This is a verified zero, not an unchecked field. The
+  documentation ships hand-rolled cURL / Python `requests` / Ruby `RestClient`
+  snippets on every endpoint page rather than an SDK, and there is no
+  installable package to version. The github.com/intricately account exists but
+  publishes zero public repositories; the acquirer's org, github.com/HGInsights,
+  publishes eight public repositories, all internal Elixir/Snowflake tooling
+  (avalanche, snowpack, ecto_ch, gimme-snowflake-creds, homebrew-tap) — none of
+  which wraps this API, and none of which has been pushed to since August 2024.
+  Because there is no official SDK, apis.yml carries NO `SDKs` pointer.
+package_count: 0
+official_package_count: 0
+packages: []
+registries_checked:
+- registry: npm
+  query: https://registry.npmjs.org/-/v1/search?text=intricately
+  status: 200
+  first_party_hits: 0
+- registry: npm
+  query: https://registry.npmjs.org/-/v1/search?text=hginsights
+  status: 200
+  first_party_hits: 0
+- registry: pypi
+  query: https://pypi.org/pypi/intricately/json
+  status: 404
+  first_party_hits: 0
+- registry: pypi
+  query: https://pypi.org/pypi/cloud-dynamics/json
+  status: 404
+  first_party_hits: 0
+- registry: rubygems
+  query: https://rubygems.org/api/v1/gems/intricately.json
+  status: 404
+  first_party_hits: 0
+- registry: crates.io
+  query: https://crates.io/api/v1/crates?q=intricately
+  status: 200
+  first_party_hits: 0
+- registry: packagist
+  query: https://packagist.org/search.json?q=intricately
+  status: 200
+  first_party_hits: 0
+- registry: nuget
+  query: https://azuresearch-usnc.nuget.org/query?q=intricately
+  status: 200
+  first_party_hits: 0
+  note: totalHits 0
+- registry: github
+  query: https://api.github.com/orgs/intricately
+  status: 404
+  first_party_hits: 0
+- registry: github
+  query: https://api.github.com/users/intricately/repos
+  status: 200
+  first_party_hits: 0
+  note: account exists, zero public repositories
+- registry: github
+  query: https://api.github.com/orgs/HGInsights/repos
+  status: 200
+  first_party_hits: 0
+  note: >-
+    8 public repos, all Snowflake/Elixir internal tooling; none wraps the Cloud
+    Dynamics API. Most recent push 2024-08-16.
+documented_client_examples:
+- language: shell
+  tool: curl
+  source: https://kb.intricately.com/docs/create-a-bulk-job
+- language: python
+  tool: requests
+  source: https://kb.intricately.com/docs/create-a-bulk-job
+- language: ruby
+  tool: RestClient
+  source: https://kb.intricately.com/docs/create-a-bulk-job

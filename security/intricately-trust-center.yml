@@ -1,0 +1,80 @@
+generated: '2026-08-14'
+method: searched
+source: https://trust.hginsights.com/
+scope: parent-organization
+api: Cloud Dynamics API (Intricately)
+note: >-
+  READ THIS BEFORE USING THIS FILE AS EVIDENCE. Intricately publishes no trust
+  center, no security page and no certification claim on any of its own hosts —
+  kb.intricately.com, help.intricately.com and status.intricately.com carry none,
+  and /.well-known/security.txt is 404 everywhere (see
+  well-known/intricately-well-known.yml). The trust center recorded here belongs to
+  HG Insights, the parent that acquired Intricately in March 2022 and to whose site
+  intricately.com now 301-redirects. It is the governing corporate entity for the
+  API, and its Terms of Service page carries a "Cloud Dynamics" login item pointing
+  at https://my.intricately.com/ — but the trust center itself never names
+  Intricately or Cloud Dynamics, and asserts nothing about this API's controls.
+  For that reason apis.yml wires `TrustCenter` and does NOT wire `Compliance`: the
+  compliance program is real, and it is the parent's, and no published document
+  extends it to this product.
+trust_center:
+  url: https://trust.hginsights.com/
+  operator: HG Insights, Inc.
+  relationship_to_provider: acquirer / parent brand
+  acquired: '2022-03-29'
+  http_status: 200
+  access: >-
+    Landing page is public; the underlying reports and policies are request-gated
+    behind the trust-center access flow.
+  names_this_product: false
+certifications:
+- name: SOC 2 Type 2
+  status: listed
+  document_access: request-gated
+  scope_covers_intricately: unstated
+reports_offered:
+- SOC 2 Report
+- Pentest Report
+- Network Diagram
+self_assessments:
+- CAIQ
+- SIG Lite
+policy_documents_listed:
+- Acceptable Use Policy
+- Asset Management Policy
+- Backup Policy
+- Business Continuity / Disaster Recovery Policy
+- Data Classification Policy
+- Data Protection Policy
+- Data Retention Policy
+control_domains_listed:
+- Data Security
+- Access Control
+- Infrastructure
+- Endpoint Security
+- Corporate Security
+- Asset Management
+- BC/DR
+- Training
+- Physical & Environmental
+intricately_surfaces_checked:
+- url: https://help.intricately.com/
+  status: 200
+  finding: no security or compliance collection
+- url: https://kb.intricately.com/llms.txt
+  status: 200
+  finding: 31 documentation pages indexed, none about security or compliance
+- url: https://api.intricately.com/.well-known/security.txt
+  status: 404
+  finding: no security.txt
+- url: https://intricately.com/
+  status: 200
+  finding: 301 redirect chain terminating at https://hginsights.com/
+vulnerability_disclosure:
+  published: false
+  note: >-
+    No security.txt, no bug bounty program (HackerOne / Bugcrowd / Intigriti all
+    negative), and no coordinated-disclosure page on any Intricately or HG Insights
+    surface found. No VulnerabilityDisclosure artifact is written and no `Security`
+    pointer is emitted.
+checked: '2026-08-14'

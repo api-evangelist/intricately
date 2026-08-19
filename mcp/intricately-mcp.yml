@@ -1,23 +1,107 @@
-generated: '2026-07-19'
+generated: '2026-08-14'
 method: derived
 status: candidate
-source: https://kb.intricately.com/
+source: >-
+  https://kb.intricately.com/ and https://help.intricately.com/collections/6962569661-intricately-api,
+  with every route confirmed by live probe of https://api.intricately.com
 note: >-
-  No official hosted or remote MCP server was found for Intricately / Cloud Dynamics.
-  The tools below are candidate tools derived from documented REST operations (there is
-  no published OpenAPI spec; operations were captured from the Cloud Dynamics docs).
+  No official hosted, remote or local MCP server exists for Intricately / Cloud
+  Dynamics — no npm package, no PyPI package, no registry listing, no vendor
+  documentation. The tools below are CANDIDATES derived from the six REST
+  operations the provider documents. There is no OpenAPI to inherit input schemas
+  from (none is published anywhere), so each tool records its documented parameters
+  and the doc page they came from. Every route was verified live: real routes
+  answer 403 with application error 4000 ("Your API key is missing or invalid"),
+  while invented routes such as /api/v2/products answer an HTML 404 — so the route
+  list is probed, not guessed. No endpoint URL is invented in the deployment block.
 server:
   name: intricately
   transport: http
   base_url: https://api.intricately.com/api/v2
   auth: X-API-KEY header
+  auth_ref: authentication/intricately-authentication.yml
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: api-key
+  verified: derived
+  note: >-
+    Nobody ships a server. mode is `none` because these tools are our derivation,
+    not a provider agent surface. Do not read the base_url above as an MCP
+    endpoint — it is the REST base the candidate tools would call.
+  checked: '2026-08-14'
 tools:
 - name: create_bulk_job
-  description: Submit an array of domains to enrich with cloud adoption, usage, and spend data.
+  description: >-
+    Submit an array of domains to be enriched with cloud adoption, usage and spend
+    data. Returns a job_id to poll. Up to 10 domains per job during the evaluation
+    period, up to 10,000 with an Enterprise license.
   source_operation: POST /api/v2/bulk_jobs
+  parameters:
+    body: array of domain strings
+  docs: https://kb.intricately.com/docs/create-a-bulk-job
+  route_probe: 403 (auth required — route exists)
 - name: list_bulk_jobs
-  description: List your Bulk Jobs with status, job_id, and created_at.
+  description: List your Bulk Jobs with status, job_id and created_at.
   source_operation: GET /api/v2/bulk_jobs
+  parameters: {}
+  response_fields:
+  - results
+  - total
+  - page
+  - result_count
+  docs: https://help.intricately.com/articles/8747664834-list-bulk-jobs
+  route_probe: 403 (auth required — route exists)
 - name: get_bulk_job_status
-  description: Get the status of a Bulk Job by job_id and fetch results when complete.
+  description: >-
+    Get the status of a Bulk Job by job_id. Returns {status, job_id, created_at};
+    poll until status is completed.
   source_operation: GET /api/v2/bulk_jobs/{job_id}
+  parameters:
+    job_id: ID of the Bulk Job (path)
+  docs: https://help.intricately.com/articles/2511508170-get-bulk-job-status
+  route_probe: 403 (auth required — route exists)
+- name: get_bulk_job_results
+  description: >-
+    Retrieve the enriched Company documents for a completed Bulk Job, paged with
+    size and from.
+  source_operation: GET /api/v2/bulk_jobs/{job_id}/results
+  parameters:
+    job_id: ID of the Bulk Job (path)
+    size: results per page, default 10, maximum 100 (query, optional)
+    from: page start offset, default 0 (query, optional)
+  response_fields:
+  - total
+  - results
+  docs: https://help.intricately.com/articles/7608306858-get-bulk-job-results
+  route_probe: 403 (auth required — route exists)
+- name: get_company
+  description: Retrieve a full Company document by its Cloud Dynamics company slug.
+  source_operation: GET /api/v2/companies/{company_slug}
+  parameters:
+    company_slug: the unique key for a company document (path)
+  docs: https://kb.intricately.com/docs/get-company
+  schema_ref: data-model/intricately-data-model.yml
+  route_probe: 403 (auth required — route exists)
+- name: lookup_company_by_domain
+  description: >-
+    Look up a company by domain. Domains never seen before are analyzed on demand
+    and can take up to 15 minutes to produce a company document.
+  source_operation: GET /api/v2/companies?domain={domain}
+  parameters:
+    domain: a valid domain name (query)
+  docs: https://kb.intricately.com/docs/new-domains
+  route_probe: 403 (auth required — route exists)
+tool_count: 6
+registries_checked:
+- registry: npm
+  query: intricately / hginsights
+  hits: 0
+- registry: pypi
+  query: intricately / cloud-dynamics
+  hits: 0
+- registry: github
+  query: github.com/intricately, github.com/HGInsights
+  hits: 0

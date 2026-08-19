@@ -1,0 +1,135 @@
+generated: '2026-08-14'
+method: derived
+source: >-
+  derived from repo artifacts (authentication/, errors/, conventions/,
+  rate-limits/, well-known/) plus live route probes of https://api.intricately.com,
+  and a documentation search of kb.intricately.com and help.intricately.com for
+  compliance claims
+api: Cloud Dynamics API (Intricately)
+note: >-
+  Every entry below is an assertion about what the Cloud Dynamics API actually
+  does, evidenced from the provider's own docs or a probe we ran. The picture is a
+  2018-era private REST API kept alive after acquisition: HTTP verbs and JSON are
+  conventional, but nothing above the transport is standardized — no OpenAPI, no
+  OAuth, no RFC 9457 errors, no RFC 8594 deprecation signalling, no standard
+  RateLimit headers, and no /.well-known/ discovery surface. NO `Compliance`
+  pointer is emitted in apis.yml: no certification is asserted for Intricately or
+  Cloud Dynamics on any Intricately surface (see security/intricately-trust-center.yml
+  for the parent organization's separate posture).
+standards:
+- id: openapi
+  conforms: false
+  evidence: >-
+    No OpenAPI/Swagger document is served on any host. /openapi.json,
+    /openapi.yaml, /swagger.json, /api/v2/openapi.json, /api-docs, /docs and
+    /redoc all return the Rails 404 HTML page on api.intricately.com; the docs
+    host kb.intricately.com serves none either.
+  probed: '2026-08-14'
+- id: rest
+  conforms: true
+  evidence: >-
+    Resource-oriented JSON over HTTPS with meaningful verbs — POST /api/v2/bulk_jobs
+    creates, GET /api/v2/bulk_jobs lists, GET /api/v2/bulk_jobs/{job_id} reads,
+    GET /api/v2/companies/{company_slug} reads. All six routes confirmed live by
+    probe (403 with application error 4000 on real routes; HTML 404 on invented
+    routes such as /api/v2/products).
+  probed: '2026-08-14'
+- id: json
+  conforms: true
+  evidence: >-
+    Requests and responses are application/json; the unauthenticated error body is
+    a JSON object, content-type application/json; charset=utf-8.
+- id: tls
+  conforms: true
+  evidence: >-
+    TLSv1.3 on api.intricately.com and kb.intricately.com; HSTS with max-age
+    31536000 on kb.intricately.com. See security/intricately-domain-security.yml.
+- id: oauth2
+  conforms: false
+  evidence: >-
+    Authentication is a single static X-API-KEY header. No authorization server,
+    no token endpoint, no /.well-known/oauth-authorization-server (404 on every
+    host). See authentication/intricately-authentication.yml.
+- id: oidc
+  conforms: false
+  evidence: /.well-known/openid-configuration returns 404 on every host probed.
+- id: rfc9457
+  conforms: false
+  evidence: >-
+    Errors are an application-specific envelope of {code, message} where `code` is
+    a proprietary numeric code (2001, 3000, 4000-4006, 5001, 5006) distinct from
+    the HTTP status. No application/problem+json, no type/title/detail/instance.
+    See errors/intricately-error-codes.yml.
+- id: rfc8594-sunset
+  conforms: false
+  evidence: >-
+    No Sunset or Deprecation header and no published deprecation policy. Notably
+    /api/v1/companies/{slug} still routes (403 auth error, not 404) alongside v2,
+    with no v1 deprecation notice anywhere in the docs.
+  probed: '2026-08-14'
+- id: rate-limit-headers
+  conforms: false
+  evidence: >-
+    The documented limit of 1 req/sec is signalled only by application error code
+    3000 in the body. No RateLimit-*, X-RateLimit-* or Retry-After header is
+    documented. See rate-limits/intricately-rate-limits.yml.
+- id: idempotency
+  conforms: false
+  evidence: >-
+    No Idempotency-Key header or idempotency contract appears in the docs. The one
+    write operation, POST /api/v2/bulk_jobs, mints a new job_id per call. No
+    `Idempotency` pointer is emitted in apis.yml.
+- id: pagination
+  conforms: true
+  evidence: >-
+    Offset/limit pagination is documented on GET /api/v2/bulk_jobs/{job_id}/results
+    via `size` (default 10, maximum 100) and `from` (offset, default 0), with a
+    `total` count in the envelope. Not a registered standard, but a consistent,
+    documented convention. See conventions/intricately-conventions.yml.
+- id: async-job
+  conforms: true
+  evidence: >-
+    A conventional submit/poll/collect long-running-job pattern: POST returns
+    {status, job_id, created_at}; poll GET /api/v2/bulk_jobs/{job_id} until status
+    is completed; then GET .../results. No callback, webhook or Location header is
+    documented — polling is the only completion signal.
+- id: well-known-discovery
+  conforms: false
+  evidence: >-
+    32 /.well-known/ probes across 4 hosts returned zero documents. See
+    well-known/intricately-well-known.yml.
+  probed: '2026-08-14'
+- id: llmstxt
+  conforms: true
+  evidence: >-
+    https://kb.intricately.com/llms.txt returns 200 text/plain with a real 31-line
+    index of the documentation, and every documentation page carries a header line
+    pointing agents at it. Saved verbatim to llms/intricately-llms.txt.
+  probed: '2026-08-14'
+- id: mcp
+  conforms: false
+  evidence: >-
+    No hosted or local MCP server is published. See mcp/intricately-mcp.yml
+    (deployment.mode = none).
+- id: a2a
+  conforms: false
+  evidence: >-
+    /.well-known/agent-card.json and the legacy /.well-known/agent.json return 404
+    on all four hosts. No agent card exists, so no a2a/ artifact is written.
+  probed: '2026-08-14'
+- id: asyncapi
+  conforms: false
+  evidence: >-
+    No event, streaming or webhook surface is documented. The Statuspage component
+    list names an "Events API" component, but no public documentation for it exists
+    on kb.intricately.com or help.intricately.com, so nothing is recorded.
+compliance_claims:
+  found: false
+  note: >-
+    No SOC 2 / ISO 27001 / GDPR / CCPA / HIPAA claim is published on any
+    Intricately-branded surface (kb.intricately.com, help.intricately.com,
+    status.intricately.com). The acquirer HG Insights runs a Vanta-style trust
+    center at trust.hginsights.com listing SOC 2 Type 2, but it does not name
+    Intricately or Cloud Dynamics; that is recorded separately and deliberately not
+    credited to this API.
+  ref: security/intricately-trust-center.yml

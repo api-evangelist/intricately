@@ -1,19 +1,39 @@
-generated: '2026-07-19'
+generated: '2026-08-14'
 method: searched
 source: https://status.intricately.com/
+docs:
+- https://status.intricately.com/api/v2/summary.json
+- https://status.intricately.com/history.rss
+- https://kb.intricately.com/docs/using-the-intricately-api
 api: Cloud Dynamics API (Intricately)
 versioning:
   scheme: uri-path
   current: v2
   example: https://api.intricately.com/api/v2/bulk_jobs
   docs: https://kb.intricately.com/docs/using-the-intricately-api
+  prior_versions:
+  - version: v1
+    still_routing: true
+    evidence: >-
+      GET https://api.intricately.com/api/v1/companies/nike returns 403 with
+      application code 4000 (auth required), not a 404 — so v1 is still routed.
+      Probed 2026-08-14.
+    deprecation_notice: none published
 status_page: https://status.intricately.com/
 status_provider: Atlassian Statuspage
+status_api: https://status.intricately.com/api/v2/summary.json
+status_probe:
+  checked: '2026-08-14'
+  http_status: 200
+  page_id: 89x6b7s44gx7
+  indicator: none
+  description: All Systems Operational
 status_components:
 - intricately.com
 - Intricately API
 - Company API
 - Enrichment API
+- Enrichment
 - Data Snapshots API
 - Events API
 - List Enrichment
@@ -21,15 +41,65 @@ status_components:
 - Login and Signup
 - Salesforce Connector
 - Chrome Extension
+status_component_note: >-
+  The component list names an "Events API" and "Data Snapshots API". Neither has
+  public documentation on kb.intricately.com or help.intricately.com, so no event
+  or streaming artifact is written — the surface is named on the status page but
+  not documented anywhere a caller could use it.
+incident_history:
+  feed: https://status.intricately.com/history.rss
+  incident_count: 17
+  most_recent:
+    title: Hardware incident with our primary database
+    date: '2024-11-29'
+  note: >-
+    The status page is live and machine-readable, but the last recorded incident is
+    from November 2024 — read as a maintained-but-quiet surface, not an active one.
 deprecation:
   policy_url: null
   sunset_header: null
-  notes: No published deprecation or Sunset-header policy was found.
+  deprecation_header: null
+  notes: >-
+    No published deprecation or Sunset-header policy (RFC 8594) was found, and v1
+    remains routed with no notice. No `Deprecation` pointer is emitted in apis.yml.
+changelog:
+  published: false
+  probed:
+  - url: https://kb.intricately.com/changelog
+    status: 404
+  notes: >-
+    The ReadMe docs project exposes no changelog. No dated release notes exist on
+    any host, so no changelog/ artifact is written.
+documentation_freshness:
+  docs_platform: ReadMe (kb.intricately.com) + Pylon knowledge base (help.intricately.com)
+  readme_pages_last_updated: '2025-04-03'
+  readme_note: >-
+    Every documentation page fetched carries the same updatedAt of 2025-04-03,
+    roughly 16 months before this check — the whole ReadMe project was last touched
+    in one pass.
+  help_center_note: Pylon articles report "Last updated 7 months ago" (approximately January 2026).
+sdk_currency:
+  first_party_sdks: 0
+  notes: >-
+    There is no first-party client library on any registry, so the usual
+    SDK-decay signal is unavailable. See packages/intricately-packages.yml.
 ownership:
   acquired_by: HG Insights
   acquired_date: '2022-03-29'
-  product_rebrand: Cloud Dynamics API
+  product_rebrand: Cloud Dynamics
+  apex_redirect:
+    from: https://intricately.com/
+    to: https://hginsights.com/
+    status: 200 after redirect chain
+    checked: '2026-08-14'
+  app_login: https://my.intricately.com/
   notes: >-
-    Intricately was acquired by HG Insights in March 2022. The data product is now
-    marketed as Cloud Dynamics, though the api.intricately.com host and Intricately
-    documentation domains remain in service.
+    Intricately was acquired by HG Insights in March 2022 and the corporate site
+    now redirects to hginsights.com, but the API estate is still standing on its
+    own hosts: api.intricately.com serves live authenticated routes,
+    kb.intricately.com serves the docs and llms.txt, help.intricately.com serves
+    the knowledge base, and status.intricately.com reports all systems
+    operational. The parent separately operates a distinct, differently-hosted
+    HG Insights API (api.hginsights.com / data-docs.hginsights.com). That is a
+    DIFFERENT product on a DIFFERENT host and is deliberately not captured in this
+    repo; it is noted here only as the likely successor surface.

@@ -1,0 +1,271 @@
+generated: '2026-08-14'
+method: searched
+source: https://kb.intricately.com/docs/the-company-document
+docs:
+- https://kb.intricately.com/docs/the-company-document
+- https://kb.intricately.com/docs/get-company
+- https://kb.intricately.com/docs/companies
+- https://kb.intricately.com/docs/providers
+- https://kb.intricately.com/docs/use-cases
+- https://kb.intricately.com/docs/digital-relationship
+api: Cloud Dynamics API (Intricately)
+note: >-
+  Read from the provider's published Company Document Schema reference, not derived
+  from an OpenAPI — Intricately publishes no machine-readable contract (see
+  x-coverage in apis.yml). Every entity and field below appears verbatim in the
+  provider's own schema table or its example company document. Many nested objects
+  are gated behind named Data Editions; that gating is recorded per field group
+  because it materially changes what a caller actually receives.
+identifiers:
+  primary_key: slug
+  description: >-
+    `slug` is the primary key for a Cloud Dynamics Company and is also the path
+    segment used by GET /api/v2/companies/{company_slug}. Companies can
+    alternatively be looked up by `domain` via GET /api/v2/companies?domain=.
+    Slugs are human-readable (e.g. "nike", "amazon-ec2", "domain-we-have-never-seen-com").
+  secondary_keys:
+  - domain
+  - website
+entities:
+- name: Company
+  description: >-
+    The root document returned by the companies endpoints and by Bulk Job results.
+    Represents one of three object types in the Cloud Dynamics data model —
+    Companies, Products, and Providers — all sharing the company shape.
+  operations:
+  - GET /api/v2/companies/{company_slug}
+  - GET /api/v2/companies?domain={domain}
+  - GET /api/v2/bulk_jobs/{job_id}/results
+  fields:
+  - slug
+  - intricately_url
+  - name
+  - logo
+  - website
+  - domain
+  - description
+  - top_alexa_rank
+  - founded_year
+  - domains.count
+  - family_members.count
+  - linkedin.url
+  - linkedin.followers
+  - application.workload_score
+- name: CompanyReference
+  description: A lightweight pointer to another Company (used by parent/children edges).
+  fields:
+  - slug
+  - name
+- name: RecordCompleteness
+  description: How much information Cloud Dynamics holds from which to build a company report.
+  fields:
+  - score
+  - value
+  docs: https://kb.intricately.com/docs/record-completeness
+- name: SpendPotential
+  description: An object representing the company's spend potential.
+  fields:
+  - score
+  - value
+- name: Location
+  description: HQ location of the company.
+  fields:
+  - city
+  - state
+  - country
+  - country_code
+  - region_code
+- name: Industry
+  fields:
+  - name
+  - intricately_name
+  - industry_list
+- name: Employees
+  fields:
+  - count
+  - estimated
+  - range
+- name: TrafficDistribution
+  description: Share of traffic by macro-region.
+  fields:
+  - na
+  - emea
+  - apj
+  - latam
+  data_edition: Geographic Intelligence
+- name: UseCase
+  description: Rollups of data indicating which areas a company is investing in.
+  fields:
+  - id
+  - name
+  - percentage
+  - product_count
+  - enterprise_product_count
+  - spend
+  - cohort
+  data_edition: Go-To-Market (Use Case)
+  docs: https://kb.intricately.com/docs/use-cases
+- name: Rollups
+  fields:
+  - application_count
+  - point_of_presence_count
+  - data_center_hosting_product_count
+  - product_count
+  - customer_count
+- name: Service
+  description: A product category the company has products deployed in.
+  fields:
+  - slug
+  - name
+  - vendor_count
+  - spend
+  - spend_tier
+  - spend_range
+  - vendors
+- name: Vendor
+  description: A specific product deployment inside a Service.
+  fields:
+  - slug
+  - name
+  - logo
+  - started_at
+  - self_hosted
+  - spend
+  - spend_tier
+  - spend_range
+- name: Report
+  description: The company's Cloud Dynamics report envelope.
+  fields:
+  - created_at
+  - status_code
+  - status_msg
+  - spend
+  - spend_tier
+  - spend_range
+- name: History
+  description: Report history for the company.
+  fields:
+  - history
+  - available_from.year
+  - available_from.month
+  data_edition: Historical
+  docs: https://kb.intricately.com/docs/historical-data
+- name: BulkJob
+  description: >-
+    The asynchronous unit of work that enriches an array of submitted domains into
+    Company documents.
+  operations:
+  - POST /api/v2/bulk_jobs
+  - GET /api/v2/bulk_jobs
+  - GET /api/v2/bulk_jobs/{job_id}
+  - GET /api/v2/bulk_jobs/{job_id}/results
+  fields:
+  - job_id
+  - status
+  - created_at
+  states:
+  - submitted
+  - processing
+  - ready
+  - completed
+relationships:
+- from: Company
+  to: CompanyReference
+  type: has_one
+  via: parent
+  note: The immediate parent company. Digital Relationship Data Edition.
+- from: Company
+  to: CompanyReference
+  type: has_one
+  via: parent_root
+  note: The ultimate parent company. Digital Relationship Data Edition.
+- from: Company
+  to: CompanyReference
+  type: has_many
+  via: children
+  note: Child companies. Digital Relationship Data Edition.
+- from: Company
+  to: RecordCompleteness
+  type: has_one
+  via: record_completeness
+- from: Company
+  to: SpendPotential
+  type: has_one
+  via: spend_ability
+- from: Company
+  to: Location
+  type: has_one
+  via: location
+- from: Company
+  to: Industry
+  type: has_one
+  via: industry
+- from: Company
+  to: Employees
+  type: has_one
+  via: employees
+- from: Company
+  to: TrafficDistribution
+  type: has_one
+  via: traffic_distribution
+- from: Company
+  to: UseCase
+  type: has_many
+  via: use_cases
+- from: Company
+  to: Rollups
+  type: has_one
+  via: rollups
+- from: Company
+  to: Service
+  type: has_many
+  via: services
+- from: Service
+  to: Vendor
+  type: has_many
+  via: vendors
+- from: Company
+  to: Report
+  type: has_one
+  via: report
+- from: Company
+  to: History
+  type: has_one
+  via: history
+- from: BulkJob
+  to: Company
+  type: has_many
+  via: results
+  note: >-
+    GET /api/v2/bulk_jobs/{job_id}/results returns a paged array of Company
+    documents plus a `total` count; page with `size` (default 10, max 100) and
+    `from` (offset, default 0).
+data_editions:
+  note: >-
+    Field availability is contractual, not universal. The docs mark these field
+    groups as belonging to a named Data Edition; a caller on a different edition
+    will not receive them.
+  editions:
+  - name: Digital Relationship
+    gates:
+    - parent
+    - parent_root
+    - children
+  - name: Geographic Intelligence
+    gates:
+    - traffic_distribution
+  - name: Go-To-Market (Use Case)
+    gates:
+    - use_cases
+  - name: Detailed Spend
+    gates:
+    - services[].spend
+    - services[].vendors[].spend
+  - name: Historical
+    gates:
+    - history
+    - services[].vendors[].started_at
+  - name: Advanced Account Scoring
+    gates:
+    - application.workload_score
+    - services[].vendors[].self_hosted

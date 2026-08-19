@@ -1,0 +1,53 @@
+generated: '2026-08-14'
+method: searched
+source: https://help.intricately.com/articles/5366497774-request-an-api-key
+docs:
+- https://help.intricately.com/articles/5366497774-request-an-api-key
+- https://hginsights.com/pricing
+api: Cloud Dynamics API (Intricately)
+plan_count: 0
+note: >-
+  Intricately / Cloud Dynamics publishes NO priced plan tiers for its API. This is
+  an honest zero recorded after reading the provider's own surfaces, not an
+  omission. The provider's "Request an API Key" article states only that "API
+  access is available as part of our Enterprise plans. Interested in Enterprise?
+  Contact us to learn more!" — there is no rate card, no per-credit price, and no
+  self-serve checkout. The parent brand's pricing page (hginsights.com/pricing,
+  where intricately.com now redirects) is likewise a contact-sales form: it says
+  pricing is "based on data consumption", that platform modules include "a
+  pre-set number of seats and intelligence credits, which can be expanded", and
+  names contract terms (standard 2-year term; 1-year available at a higher price;
+  quarterly billing at a premium) but no prices. Third-party resellers and review
+  sites publish estimated ranges; those are NOT provider-published and are
+  deliberately not recorded here.
+plans: []
+commercial_model:
+  gate: enterprise-contract
+  self_serve: false
+  free_tier: false
+  public_price_list: false
+  metering:
+    unit: api-credits
+    description: >-
+      API usage is metered in API credits. The API returns application code 5001
+      when the requested Bulk Job exceeds remaining credits and 5006 when credits
+      are exhausted. The credit allotment is set by the Enterprise agreement and is
+      not published.
+    ref: rate-limits/intricately-rate-limits.yml
+  quantity_limits:
+  - limit: 10
+    unit: domains-per-bulk-job
+    applies_to: evaluation-period
+    source: https://kb.intricately.com/docs/create-a-bulk-job
+  - limit: 10000
+    unit: domains-per-bulk-job
+    applies_to: enterprise-license
+    source: https://kb.intricately.com/docs/create-a-bulk-job
+  contract_terms:
+  - term: 2 years
+    note: standard term (parent brand pricing page)
+  - term: 1 year
+    note: available at a higher price
+  billing_help:
+  - https://help.intricately.com/collections/2597709672-plans-%26-billing
+  request_access: https://help.intricately.com/articles/5366497774-request-an-api-key
