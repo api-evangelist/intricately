@@ -33,7 +33,7 @@ x-acquired-by: hg-insights
 x-acquired-date: '2022-03-29'
 x-tier: profile
 x-tier-reason: enriched-pipeline
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 created: '2026-07-17'
 modified: '2026-08-14'
 tags:
