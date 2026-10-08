@@ -105,6 +105,8 @@ apis:
   - type: DataModel
     url: data-model/intricately-data-model.yml
 common:
+- type: RateLimits
+  url: rate-limits/intricately-rate-limits.yml
 - type: Website
   url: https://intricately.com
 - type: DeveloperPortal
